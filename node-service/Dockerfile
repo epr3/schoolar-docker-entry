@@ -1,8 +1,11 @@
 FROM node:11
 
-RUN apt-get update && apt-get install -y wget
-
-ADD . /node-app
 WORKDIR /node-app
+
+COPY package.json .
+
 RUN npm install
+
+COPY . .
+
 CMD ["npm", "run", "start"]
