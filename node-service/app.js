@@ -3,40 +3,17 @@ const app = express();
 const port = 3000;
 
 //import the library
-const amqplib = require("amqplib");
+const Redis = require("ioredis");
+const publisher = new Redis(6379, 'redis');
 
-//queue channel
-let channel = null;
-//queue name
-const QUEUE = "test";
-
-function init() {
-  return amqplib
-    .connect("amqp://rabbitmq-server:5672")
-    .then(conn => conn.createChannel())
-    .then(ch => {
-      channel = ch;
-
-      const q = 'hello';
-
-      ch.assertQueue(q, { durable: false });
-      // Note: on Node 6 Buffer.from(msg) should be used
-      ch.sendToQueue(q, new Buffer('Hello World!'));
-      console.log(" [x] Sent 'Hello World!'");
-    });
-}
-
-//Random id generator
-function randomid() {
-  return (
-    new Date().getTime().toString() +
-    Math.random().toString() +
-    Math.random().toString()
-  );
-}
 
 app.get("/", (req, res) => {
-  init();
+  publisher.publish("hello.created", "Hello World!");
+  res.status(200).send('Message sent');
+});
+
+app.get("/test", (req, res) => {
+  publisher.publish("test.created", "Hello Test!");
   res.status(200).send('Message sent');
 });
 

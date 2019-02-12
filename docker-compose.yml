@@ -6,14 +6,40 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-  rabbitmq-server:
-    image: rabbitmq:3.7-management
-    hostname: rabbitmq-server
+  redis:
+    image: redis:alpine
     ports:
-      - "15672:15672"
-      - "5672:5672"
+      - "6379:6379"
     volumes:
-      - "/opt/rabbitmq:/var/lib/rabbitmq"
+      - redis_data:/data
+  php-queue-service:
+    build:
+      dockerfile: Dockerfile-queue
+      context: ./quiz-service
+    restart: on-failure
+    volumes:
+      - ./quiz-service:/quiz-app
+    links:
+      - redis
+      - db
+    depends_on:
+      - redis
+      - db
+    tty: true
+  php-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./quiz-service
+    restart: on-failure
+    volumes:
+      - ./quiz-service:/quiz-app
+    links:
+      - db
+    depends_on:
+      - db
+    tty: true
+    ports:
+      - "8000:8000"
   node-service:
     build: ./node-service
     restart: on-failure
@@ -21,23 +47,13 @@ services:
       - ./node-service:/node-app
       - /node-app/node_modules
     links:
-      - rabbitmq-server
+      - redis
       - db
     depends_on:
-      - rabbitmq-server
+      - redis
       - db
     tty: true
     ports:
       - "3000:3000"
-  python-service:
-    build: ./python-service
-    restart: on-failure
-    volumes:
-      - ./python-service:/python-app
-    depends_on:
-      - rabbitmq-server
-      - db
-    links:
-        - rabbitmq-server
-        - db
-    tty: true
+volumes:
+  redis_data:
