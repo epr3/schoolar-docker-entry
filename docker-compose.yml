@@ -12,57 +12,10 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
-  ui_gateway:
-    build:
-      dockerfile: Dockerfile
-      context: ./schoolar-ui-gateway
-    restart: on-failure
-    volumes:
-      - /app/node_modules
-      - /app
-    ports:
-      - "3000:3000"
-    command: ["npm", "run", "dev"]
-    links:
-      - redis
-    depends_on:
-      - redis
-    tty: true
-  live_qa:
-    build:
-      dockerfile: Dockerfile
-      context: ./schoolar-live_qa-service
-    restart: on-failure
-    ports:
-      - "4000:3000"
-    volumes:
-      - /app/node_modules
-      - /app
-    command: ["npm", "run", "dev"]
-    links:
-      - redis
-      - db
-    depends_on:
-      - redis
-      - db
-    tty: true
-  user:
-    build:
-      dockerfile: Dockerfile
-      context: ./schoolar-user-service
-    restart: on-failure
-    command: ["npm", "run", "dev"]
-    ports:
-      - "5000:3000"
-    volumes:
-      - /app/node_modules
-      - /app
-    links:
-      - redis
-      - db
-    depends_on:
-      - redis
-      - db
-    tty: true
 volumes:
   redis_data:
+
+networks:
+  default:
+    name: schoolar-network
+
