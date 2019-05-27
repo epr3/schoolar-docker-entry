@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+  schedule-service:
+    container_name: schedule_service
+    image: epr3/schoolar-schedule-service_nginx:latest
+    links:
+      - schedule-service-php
+  schedule-service-php:
+    container_name: php
+    image: epr3/schoolar-schedule-service_php:latest
+    command: php-fpm
+    environment:
+      - APP_NAME=Lumen
+      - APP_ENV=production
+      - APP_URL=http://localhost
+      - APP_TIMEZONE=UTC
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/database/db.sqlite
+      - CACHE_DRIVER=file
+      - QUEUE_CONNECTION=sync
+      - JWT_SECRET=123456
+
+networks:
+  default:
+    external:
+      name: schoolar-network

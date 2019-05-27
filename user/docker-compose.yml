@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  user-service:
+    container_name: user_service
+    image: epr3/schoolar-user-service:latest
+    command: ["pm2-runtime", "pm2.config.json"]
+    environment:
+      - JWT_SECRET=123456
+
+networks:
+  default:
+    external:
+      name: schoolar-network

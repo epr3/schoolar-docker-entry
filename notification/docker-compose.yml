@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  notification-service:
+    container_name: notification_service
+    image: epr3/schoolar-notification-service:latest
+    command: ["npm", "run", "dev"]
+    environment:
+      - SENDGRID_API_KEY=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
+      - USER_UI_URL=https://app.resster.com/reset-password
+networks:
+  default:
+    external:
+      name: schoolar-network
