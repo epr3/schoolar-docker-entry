@@ -14,8 +14,8 @@ services:
       - ./data:/data/db
     ports:
       - "27017:27017"
-  volumes:
-    redis_data:
+volumes:
+  redis_data:
 
 networks:
   default:
