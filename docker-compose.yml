@@ -14,20 +14,6 @@ services:
       - ./data:/data/db
     ports:
       - "27017:27017"
-  admin-ui:
-    container_name: admin_ui
-    image: epr3/schoolar-admin-ui:latest
-  user-ui:
-    container_name: user_ui
-    image: epr3/schoolar-user-ui:latest
-  ui-gateway:
-    container_name: ui_gateway
-    image: epr3/schoolar-ui-gateway:latest
-    environment:
-      - JWT_SECRET=123456
-      - FIREBASE_PROJECT_ID=schoolar-baebf
-      - FIREBASE_BUCKET_URL=schoolar-baebf.appspot.com
-    command: ["pm2-runtime", "pm2.config.json"]
   nginx:
     build: .
     container_name: nginx

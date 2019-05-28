@@ -1,0 +1,15 @@
+version: '3.5'
+services:
+  ui-gateway:
+    container_name: ui_gateway
+    image: epr3/schoolar-ui-gateway:latest
+    environment:
+      - JWT_SECRET=123456
+      - FIREBASE_PROJECT_ID=schoolar-baebf
+      - FIREBASE_BUCKET_URL=schoolar-baebf.appspot.com
+    command: ["pm2-runtime", "pm2.config.json"]
+
+networks:
+  default:
+    external:
+      name: schoolar-network
