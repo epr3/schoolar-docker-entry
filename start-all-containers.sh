@@ -10,4 +10,4 @@ docker-compose up -d
 cd ~/schoolar/live_qa
 docker-compose up -d
 cd ~/schoolar/quiz
-docker-compose-up -d
+docker-compose up -d
