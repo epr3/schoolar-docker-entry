@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
 docker-compose up -d
-cd ~/schoolar/database
-docker-compose up -d
-cd ~/schoolar/frontend
-docker-compose up -d
-cd ~/schoolar/gateway
+cd ~/schoolar/nginx
 docker-compose up -d
 cd ~/schoolar/schedule
 docker-compose up -d

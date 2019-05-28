@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
-docker-compose up --force-recreate --build -d
-docker image prune -f
-cd ~/schoolar/frontend
-docker-compose up --force-recreate --build -d
-docker image prune -f
-cd ~/schoolar/gateway
+cd ~/schoolar/nginx
 docker-compose up --force-recreate --build -d
 docker image prune -f
 cd ~/schoolar/schedule

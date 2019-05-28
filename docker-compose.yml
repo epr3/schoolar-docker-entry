@@ -1,11 +1,21 @@
 version: '3.5'
 services:
-  nginx:
-    build: .
-    container_name: nginx
-    command: ["nginx", "-g", "daemon off;"]
+  redis:
+    container_name: redis
+    image: redis:alpine
     ports:
-      - 80:80
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+volumes:
+  redis_data:
 
 networks:
   default:
