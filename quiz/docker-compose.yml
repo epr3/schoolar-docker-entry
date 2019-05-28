@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  quiz-service:
+    container_name: quiz_service
+    image: epr3/schoolar-quiz-service:latest
+    command: ["pm2-runtime", "pm2.config.json"]
+    environment:
+      - JWT_SECRET=123456
+
+networks:
+  default:
+    external:
+      name: schoolar-network

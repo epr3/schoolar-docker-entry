@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  live_qa-service:
+    container_name: live_qa_service
+    image: epr3/schoolar-live_qa-service:latest
+    command: ["pm2-runtime", "pm2.config.json"]
+    environment:
+      - JWT_SECRET=123456
+
+networks:
+  default:
+    external:
+      name: schoolar-network
