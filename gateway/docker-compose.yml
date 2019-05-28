@@ -7,6 +7,7 @@ services:
       - JWT_SECRET=123456
       - FIREBASE_PROJECT_ID=schoolar-baebf
       - FIREBASE_BUCKET_URL=schoolar-baebf.appspot.com
+      - SENTRY_DSN=https://ddcca23f6d414cc9b11223720c8090ac@sentry.io/1453537
     command: ["pm2-runtime", "pm2.config.json"]
 
 networks:
