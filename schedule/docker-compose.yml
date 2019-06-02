@@ -2,13 +2,8 @@ version: '3.5'
 services:
   schedule-service:
     container_name: schedule_service
-    image: epr3/schoolar-schedule-service_nginx:latest
-    links:
-      - schedule-service-php
-  schedule-service-php:
-    container_name: php
-    image: epr3/schoolar-schedule-service_php:latest
-    command: php-fpm
+    image: epr3/schoolar-schedule-service:latest
+    command: "/usr/bin/supervisord"
     environment:
       - APP_NAME=Lumen
       - APP_ENV=production

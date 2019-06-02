@@ -3,6 +3,8 @@
 docker-compose up -d
 cd ~/schoolar/nginx
 docker-compose up -d
+cd ~/schoolar/user
+docker-compose up -d
 cd ~/schoolar/schedule
 docker-compose up -d
 cd ~/schoolar/live_qa
