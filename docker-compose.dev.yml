@@ -4,7 +4,10 @@ services:
     container_name: mariadb
     image: mariadb
     ports:
-      - "3306:3306"
+      - "33306:3306"
+    volumes:
+      - ./create-databases.sql:/docker-entrypoint-initdb.d/create-databases.sql
+      - mysql:/var/lib/mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
   redis:
@@ -23,6 +26,7 @@ services:
       - "27017:27017"
 volumes:
   redis_data:
+  mysql:
 
 networks:
   default:
